@@ -1,6 +1,6 @@
-<?php namespace Prevald\Libraries;
+<?php namespace myApp\Libraries;
 
- // Name:    		Prevald
+ // Name:    		myApp
  //
  // Created:  		2021-08-31
  //
@@ -9,7 +9,7 @@
  //
  // Requirements: 	PHP7.2 or above
  //
- // @package    	CodeIgniter4-Prevald
+ // @package    	
  // @author     	Greald Henstra <greator@ghvernuft.nl>
  // @license    	use at will, and at your own risk
  // @link       	will be on Github one day
@@ -32,7 +32,7 @@ abstract class Modeltable
 		$db = db_connect();
 		if ($db->tableExists($table))
 		{
-		    return "\n<br/>".__METHOD__.__LINE__."\n". $table . " reeds aangetroffen.";
+		    return "\n<br/>".__METHOD__.__LINE__."\n". $table . " already there.";
 		}
 		else
 		{
