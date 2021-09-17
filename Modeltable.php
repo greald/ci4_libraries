@@ -18,9 +18,9 @@
 abstract class Modeltable
 {
     // Force Extending class to define this method
-    abstract protected function getTable();
-    abstract protected function getTableFields();
-    abstract protected function getPrimaryKey();
+    abstract public function getTable();
+    abstract public function getTableFields();
+    abstract public function getPrimaryKey();
 
     // Common method
     public function tableSetUpOnce() 
