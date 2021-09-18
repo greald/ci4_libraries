@@ -1,13 +1,13 @@
 <?php namespace myApp\Libraries;
 
- // Name:    		myApp
+ // Name:    		Modeltable
  //
  // Created:  		2021-08-31
  //
- // Description:  	Generic abstract class to create a table in database. To be extended by specific classes.
+ // Description:  	Generic abstract class to generate a table in database. To be extended by specific Model classes.
  // 
  //
- // Requirements: 	PHP7.2 or above
+ // Requirements: 	Codeigniter 4, PHP7.2 or above
  //
  // @package    	
  // @author     	Greald Henstra <greator@ghvernuft.nl>
