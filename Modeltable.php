@@ -12,7 +12,7 @@
  // @package    	
  // @author     	Greald Henstra <greator@ghvernuft.nl>
  // @license    	use at will, and at your own risk
- // @link       	will be on Github one day
+ // @link       	https://github.com/greald/ci4libraries/blob/main/Modeltable.php
  // @filesource
 
 abstract class Modeltable
