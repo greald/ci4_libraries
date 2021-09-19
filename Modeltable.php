@@ -22,7 +22,10 @@ abstract class Modeltable
     abstract public function getTableFields();
     abstract public function getPrimaryKey();
 
-    // Common method
+    // Common properties
+    protected $already = FALSE;
+    
+    // Common methods
     public function tableSetUpOnce() 
     {        
 		$table 			= $this->getTable();
@@ -32,6 +35,7 @@ abstract class Modeltable
 		$db = db_connect();
 		if ($db->tableExists($table))
 		{
+		    $this->already = TRUE;
 		    return "\n<br/>".__METHOD__.__LINE__."\n". $table . " already there.";
 		}
 		else
