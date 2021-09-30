@@ -46,6 +46,8 @@ abstract class Modeltable
 					->addPrimaryKey($primaryKey)
 					->createTable($table, TRUE); // TRUE : CREATE TABLE IF NOT EXISTS table_name			
 			
+			// primary key //////////////////////////////////////////////////////////////////////////
+			
 			$Qaincr = "ALTER TABLE `".$table.
 				"` CHANGE `".$primaryKey.
 				"` `".$primaryKey.
@@ -54,7 +56,27 @@ abstract class Modeltable
 				$tableFields[$primaryKey]['constraint'].
 				") UNSIGNED NOT NULL AUTO_INCREMENT; ";
 			// echo "\n<br/>".__METHOD__.__LINE__."\n". $Qaincr;	
-			return $db->query($Qaincr);		
+
+			// indexeren //////////////////////////////////////////////////////////////////////////
+		    
+		    	$Qindex = "ALTER TABLE `".$table.
+				"` ADD INDEX `".$table."tail` (";
+			$lastcomma = FALSE;
+		    	foreach ($tableFields as $field=>$feats)
+		    	{
+				if (isset($feats['index']) && $feats['index'])
+				{
+					$Qindex .= "`". $field."`,";
+					$lastcomma = $lastcomma || TRUE;
+				}
+			}
+			$Qindex = $lastcomma ? substr($Qindex, 0, -1) . ")" : ""; // remove last comma if any OR delete query if none
+			// echo "\n<br/>".__METHOD__.__LINE__."\n\index query\n". $Qindex . " ;\n";
+			
+			$indexed = $db->query($Qindex);	
+		    	
+			return [$uitvoer, $indexed];
+
 		}
     }
 }
