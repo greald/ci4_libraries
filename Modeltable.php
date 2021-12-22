@@ -25,6 +25,18 @@ abstract class Modeltable
     // Common properties
     protected $already = FALSE;
     
+    public function already()
+    {
+		$db = db_connect();
+		//if ($db->tableExists($this->getTable())) // doesnt work somehow
+		if($db->getFieldNames($this->getTable()) == []) {} else
+		{
+		    $this->already = TRUE;
+		    return ; //"\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " already there.";
+		}
+	        // $this->already = $db->getFieldNames($this->getTable()) == [] ? FALSE : TRUE ; // same effect, much shorter
+    }
+
     // Common methods
     public function tableSetUpOnce() 
     {        
@@ -33,10 +45,11 @@ abstract class Modeltable
         	$primaryKey 	= $this->getPrimaryKey(); 
         		
 		$db = db_connect();
-		if ($db->tableExists($table))
+		//if ($db->tableExists($table)) // doesnt work somehow
+		$this->already();
+		if($this->already)
 		{
-		    $this->already = TRUE;
-		    return "\n<br/>".__METHOD__.__LINE__."\n". $table . " already there.";
+		    // return "\n<br/>".__METHOD__.__LINE__."\n". $table . " already there.";
 		}
 		else
 		{
