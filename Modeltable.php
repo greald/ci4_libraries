@@ -28,13 +28,16 @@ abstract class Modeltable
     public function already()
     {
 		$db = db_connect();
-		//if ($db->tableExists($this->getTable())) // doesnt work somehow
-		if($db->getFieldNames($this->getTable()) == []) {} else
+		if ( $db->tableExists($this->getTable()) == FALSE || $db->getFieldNames($this->getTable()) == [] ) 
+		{
+		    $this->already = FALSE;
+		    return "\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " empty, assumed non-existing.";
+		}
+		else
 		{
 		    $this->already = TRUE;
-		    return ; //"\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " already there.";
+		    return "\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " already there.";
 		}
-	        // $this->already = $db->getFieldNames($this->getTable()) == [] ? FALSE : TRUE ; // same effect, much shorter
     }
 
     // Common methods
