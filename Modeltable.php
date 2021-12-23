@@ -23,23 +23,7 @@ abstract class Modeltable
     abstract public function getPrimaryKey();
 
     // Common properties
-    protected $already = FALSE;
     
-    public function already()
-    {
-		$db = db_connect();
-		if ( $db->tableExists($this->getTable()) == FALSE || $db->getFieldNames($this->getTable()) == [] ) 
-		{
-		    $this->already = FALSE;
-		    return "\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " empty, assumed non-existing.";
-		}
-		else
-		{
-		    $this->already = TRUE;
-		    return "\n<br/>".__METHOD__.__LINE__."\n". $this->getTable() . " already there.";
-		}
-    }
-
     // Common methods
     public function tableSetUpOnce() 
     {        
@@ -49,8 +33,8 @@ abstract class Modeltable
         		
 		$db = db_connect();
 		//if ($db->tableExists($table)) // doesnt work somehow
-		$this->already();
-		if($this->already)
+		//$this->already();
+		if( FALSE ) //($this->already)
 		{
 		    // return "\n<br/>".__METHOD__.__LINE__."\n". $table . " already there.";
 		}
@@ -75,27 +59,28 @@ abstract class Modeltable
 			$primary = $db->query($Qaincr);
 			
 			// indexeren //////////////////////////////////////////////////////////////////////////
-		    
-	    		$Qindex = "ALTER TABLE `".$table.
-				"` ADD INDEX `".$table."tail` (";
-			$lastcomma = FALSE;
-	    		foreach ($tableFields as $field=>$feats)
-	    		{
-				if (isset($feats['index']) && $feats['index'])
+		        $indexed = null;
+		        if( $createtable->resultArray == [] ) { /* assumed: table existed before */ } else
+		        {
+	    		    $Qindex = "ALTER TABLE `".$table.
+			    	"` ADD INDEX `".$table."tail` (";
+			    $lastcomma = FALSE;
+	    		    foreach ($tableFields as $field=>$feats)
+	    		    {
+			   	if (isset($feats['index']) && $feats['index'])
 				{
 					$Qindex .= "`". $field."`,";
 					$lastcomma = $lastcomma || TRUE;
 				}
-			}
-			
-			$indexed = null;
-			if($lastcomma) // equiv: if index query is required
-			{
+			    }
+
+			    if($lastcomma) // equiv: if index query is required
+			    {
 				$Qindex = substr($Qindex, 0, -1) . ")"; // remove last comma
 				echo "\n<br/>".__METHOD__.__LINE__."\n\index query\n". $Qindex . " ;\n";			
 				$indexed = $db->query($Qindex);
-			}
-		    	
+			    }
+		        }	
 			return [$primary, $indexed];
 		}
     	}
