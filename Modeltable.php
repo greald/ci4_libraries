@@ -1,4 +1,4 @@
-<?php namespace Internetional\Libraries;
+<?php namespace MyApp\Libraries;
 
  // Name:    		Modeltable
  //
