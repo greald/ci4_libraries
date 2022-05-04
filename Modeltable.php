@@ -17,19 +17,19 @@
 
 abstract class Modeltable
 {
-    // Force Extending class to define this method
-    abstract public function getTable();
-    abstract public function getTableFields();
-    abstract public function getPrimaryKey();
+    	// Force Extending class to define this method
+    	abstract public function getTable();
+    	abstract public function getTableFields();
+    	abstract public function getPrimaryKey();
 
-    // Common properties
+   	// Common properties
 
-    // Common methods
-    public function tableSetUpOnce() 
-    {        
-		$table 			= $this->getTable();
+    	// Common methods
+    	public function tableSetUpOnce() 
+    	{        
+		$table 		= $this->getTable();
 		$tableFields 	= $this->getTableFields();
-        $primaryKey 	= $this->getPrimaryKey(); 
+                $primaryKey 	= $this->getPrimaryKey(); 
         		
 		$db = db_connect();
 		
@@ -58,16 +58,16 @@ abstract class Modeltable
 			$primary = $db->query($Qaincr);
 			
 			// indexeren //////////////////////////////////////////////////////////////////////////
-		    $indexed = null;
-//		    if( is_object($createtable) && $createtable->resultArray == [] ) { /* assumed: table existed before */ } else
-		    // criterion already filtered:
-		    if( FALSE ) { /* assumed: table existed before */ } else
-		    {
-		    	$Qindex = "ALTER TABLE `".$table.
+		    	$indexed = null;
+//		    	if( is_object($createtable) && $createtable->resultArray == [] ) { /* assumed: table existed before */ } else
+		    	// criterion already filtered:
+		    	if( FALSE ) { /* assumed: table existed before */ } else
+		    	{
+		    		$Qindex = "ALTER TABLE `".$table.
 					"` ADD INDEX `".$table."tail` (";
 				$lastcomma = FALSE;
-		    	foreach ($tableFields as $field=>$feats)
-		    	{
+		    		foreach ($tableFields as $field=>$feats)
+		    		{
 					if (isset($feats['index']) && $feats['index'])
 					{
 						$Qindex .= "`". $field."`,";
@@ -82,8 +82,7 @@ abstract class Modeltable
 					$indexed = $db->query($Qindex);
 				}				
 			}
-			
 			return [$primary, $indexed];
 		}
-    }
+    	}
 }
