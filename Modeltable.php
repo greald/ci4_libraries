@@ -4,7 +4,7 @@
  //
  // Created:  		2021-08-31
  //
- // Description:  	Generic abstract class to generate a table in database. To be called by specific Model classes.
+ // Description:  	Generic abstract class to generate a table in database. To be extended by specific Model classes.
  // 
  //
  // Requirements: 	Codeigniter 4, PHP7.2 or above
